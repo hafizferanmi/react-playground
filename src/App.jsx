@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 
@@ -11,6 +11,8 @@ function App() {
   const [users, setUsers] = useState(["Ade", "Bisi"]);
 
   const cuteFunction = () => "cute";
+
+  const niceFunction = useCallback(() => "nice", [person.username]);
 
   useEffect(() => {
     console.log("Runs when count changes");
@@ -33,6 +35,10 @@ function App() {
     );
   }, dep);
 
+  useEffect(() => {
+    console.log("Run when the nice function changes");
+  }, [niceFunction]);
+
   // useEffect(() => {
   //   console.log("Run only when cute function changes");
   // }, [cuteFunction]); dont use function as array dependencies
@@ -49,6 +55,7 @@ function App() {
         <button onClick={() => setPerson({ ...person, name: "titi" })}>
           {person.name}
         </button>
+        <button onClick={() => setUsers([...users])}>{users[0]}</button>
       </header>
     </div>
   );
